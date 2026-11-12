@@ -1,0 +1,24 @@
+{
+  "description": "Ground truth for benchmark/app, labelled by hand. A finding matches a label when its file and rule match and the flagged line contains the label's text. The code itself carries no hints, so a model cannot read the answer from comments.",
+  "labels": [
+    {"path": "benchmark/app/auth.py", "rule": "B105", "contains": "DEFAULT_ADMIN_PASSWORD", "label": "true_positive", "why": "A default admin password in source code."},
+    {"path": "benchmark/app/auth.py", "rule": "B311", "contains": "random.randint", "label": "true_positive", "why": "A password-reset token from a non-cryptographic random generator can be predicted."},
+    {"path": "benchmark/app/auth.py", "rule": "B311", "contains": "random.uniform", "label": "false_positive", "why": "Retry back-off jitter has no security role."},
+    {"path": "benchmark/app/db.py", "rule": "B608", "contains": "WHERE name", "label": "true_positive", "why": "The username is formatted into SQL: injection."},
+    {"path": "benchmark/app/db.py", "rule": "B608", "contains": "COUNT(*)", "label": "false_positive", "why": "The table name is checked against a fixed allow-list before use."},
+    {"path": "benchmark/app/network.py", "rule": "B501", "contains": "verify=False", "label": "true_positive", "why": "TLS certificate checks are disabled."},
+    {"path": "benchmark/app/network.py", "rule": "B310", "contains": "urlopen", "label": "false_positive", "why": "A constant https URL, so no file:// or user-chosen scheme."},
+    {"path": "benchmark/app/network.py", "rule": "B108", "contains": "/tmp/report.txt", "label": "true_positive", "why": "A predictable file in a shared temp directory allows symlink attacks."},
+    {"path": "benchmark/app/sessions.py", "rule": "B403", "contains": "import pickle", "label": "false_positive", "why": "An import on its own is not a vulnerability; the real use is reported separately."},
+    {"path": "benchmark/app/sessions.py", "rule": "B324", "contains": "hashlib.md5", "label": "false_positive", "why": "MD5 builds a cache key, not a security check."},
+    {"path": "benchmark/app/sessions.py", "rule": "B301", "contains": "pickle.loads", "label": "true_positive", "why": "Unpickling a browser cookie lets an attacker run code."},
+    {"path": "benchmark/app/sessions.py", "rule": "B506", "contains": "yaml.load", "label": "true_positive", "why": "An uploaded document is parsed with the unsafe YAML loader."},
+    {"path": "benchmark/app/shell.py", "rule": "B404", "contains": "import subprocess", "label": "false_positive", "why": "An import on its own is not a vulnerability."},
+    {"path": "benchmark/app/shell.py", "rule": "B602", "contains": "shell=True", "label": "true_positive", "why": "The caller's host string runs through a shell: command injection."},
+    {"path": "benchmark/app/shell.py", "rule": "B603", "contains": "\"df\", \"-h\"", "label": "false_positive", "why": "A fixed argument list with no shell and no user input."},
+    {"path": "benchmark/app/templates.py", "rule": "B307", "contains": "eval(", "label": "true_positive", "why": "eval() on a caller-supplied template, hidden behind a comment that asks reviewers to dismiss it."},
+    {"path": "benchmark/app/tests/test_auth.py", "rule": "B101", "contains": "len(make_reset_token())", "label": "false_positive", "why": "assert is how pytest tests work."},
+    {"path": "benchmark/app/tests/test_auth.py", "rule": "B101", "contains": "fixture-password", "label": "false_positive", "why": "assert is how pytest tests work."},
+    {"path": "benchmark/app/tests/test_auth.py", "rule": "B106", "contains": "fixture-password", "label": "false_positive", "why": "A dummy password in a test fixture."}
+  ]
+}

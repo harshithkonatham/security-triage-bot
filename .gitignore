@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.coverage
+coverage.xml
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+reports/
+*.sarif
+!tests/data/*.sarif
+.env
