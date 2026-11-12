@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "benchmark/app is deliberately vulnerable test data with dummy credentials"
+paths = ['''^benchmark/app/''']
