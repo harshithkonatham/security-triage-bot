@@ -1,0 +1,73 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep OSS",
+          "rules": [
+            {
+              "id": "python.lang.security.audit.subprocess-shell-true",
+              "defaultConfiguration": {"level": "error"},
+              "properties": {"tags": ["CWE-78: OS Command Injection", "security"]}
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "python.lang.security.audit.subprocess-shell-true",
+          "message": {"text": "subprocess call with shell=True"},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "benchmark/app/shell.py", "uriBaseId": "%SRCROOT%"},
+                "region": {"startLine": 7}
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "python.lang.security.audit.subprocess-shell-true",
+          "message": {"text": "a result with no location is skipped"}
+        }
+      ]
+    },
+    {
+      "tool": {"driver": {"name": "Bandit", "rules": [{"id": "B602", "properties": {"tags": ["external/cwe/cwe-78"]}}]}},
+      "results": [
+        {
+          "ruleId": "B602",
+          "level": "warning",
+          "message": {"text": "subprocess call with shell=True identified"},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "benchmark/app/shell.py"},
+                "region": {"startLine": 7, "endLine": 7}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tool": {"driver": {"name": "Gitleaks"}},
+      "results": [
+        {
+          "ruleId": "generic-api-key",
+          "level": "bogus-level",
+          "message": {"text": "Detected a Generic API Key"},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "config/settings.py"},
+                "region": {"startLine": 2}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
